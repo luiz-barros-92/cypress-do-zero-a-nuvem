@@ -25,4 +25,13 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.error').should('be.visible')
   })
+
+  it('teste de valor nao-numerico digitado', () => {
+    cy.get('#firstName').type('João')
+    cy.get('#lastName').type('Ambrose')
+    cy.get('#email').type('john@ambrose,io')
+    cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})    
+    cy.get('#phone').type('abc').should('have.value', '')
+    cy.get('.button').click()
+  })
 })
