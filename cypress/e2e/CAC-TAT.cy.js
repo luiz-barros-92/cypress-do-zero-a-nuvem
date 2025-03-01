@@ -13,6 +13,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#email').type('john@ambrose.io')
     cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})    
     cy.get('.button').click()
+    
     cy.get('.success').should('be.visible')
   })
 
@@ -66,9 +67,15 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', '')
   })
 
-  it.only('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+  it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
     cy.get('.button').click()
 
     cy.get('.error').should('be.visible')
+  })
+
+  it.only('envia o formuário com sucesso usando um comando customizado', () => {
+    cy.fillMandatoryFieldsAndSubmit()
+
+    cy.get('.success').should('be.visible')
   })
 })
