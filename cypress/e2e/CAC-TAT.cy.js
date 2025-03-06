@@ -7,12 +7,12 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
   })
 
-  it('preenche os campos obrigatórios e envia o formulário', () => {
+  it.only('preenche os campos obrigatórios e envia o formulário', () => {
     cy.get('#firstName').type('João')
     cy.get('#lastName').type('Ambrose')
     cy.get('#email').type('john@ambrose.io')
     cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})    
-    cy.get('.button').click()
+    cy.contains('Enviar').click()
     
     cy.get('.success').should('be.visible')
   })
@@ -22,7 +22,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#lastName').type('Ambrose')
     cy.get('#email').type('john@ambrose,io')
     cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})    
-    cy.get('.button').click()
+    cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
   })
@@ -31,9 +31,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#firstName').type('João')
     cy.get('#lastName').type('Ambrose')
     cy.get('#email').type('john@ambrose,io')
-    cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})    
-    cy.get('#phone').type('abc').should('have.value', '')
-    cy.get('.button').click()
+    cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})
+    cy.get('#phone').type('abc').should('have.value', '')    
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
@@ -42,7 +41,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#email').type('john@ambrose,io')
     cy.get('#open-text-area').type('Testando minúsculo e MAIÚSCULO, assim como assentuação.', {delay: 0})
     cy.get('#phone-checkbox').click()
-    cy.get('.button').click()
+    cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
   })
@@ -68,12 +67,12 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   })
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-    cy.get('.button').click()
+    cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
   })
 
-  it.only('envia o formuário com sucesso usando um comando customizado', () => {
+  it('envia o formuário com sucesso usando um comando customizado', () => {
     cy.fillMandatoryFieldsAndSubmit()
 
     cy.get('.success').should('be.visible')
